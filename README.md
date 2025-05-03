@@ -21,7 +21,7 @@ Creating a professional portfolio can be challenging for individuals without a b
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React.js
+- **Frontend**: html,css,js
 - **State Management**: Redux
 - **AI Support**: Generative AI (for content suggestions)
 - **Styling**: CSS3, Bootstrap/Tailwind (optional)
