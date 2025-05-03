@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Executive Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #7f8c8d;
+            --accent: #3498db;
+            --text: #333333;
+            --light-text: #95a5a6;
+            --bg: #ffffff;
+            --card-bg: #f5f7fa;
+            --border: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 3rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-weight: 500;
+            font-size: 2.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .tagline {
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            border-right: 1px solid var(--border);
+            padding-right: 2rem;
+        }
+
+        .main-content {
+            padding-left: 1rem;
+        }
+
+        .section-title {
+            font-weight: 500;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            margin-bottom: 1rem;
+        }
+
+        .contact-label {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+
+        .experience-item {
+            margin-bottom: 2rem;
+        }
+
+        .experience-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-meta {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--primary);
+            color: white;
+            font-size: 0.9rem;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="{{ user_data.profile_pic}}" 
+             alt="{{ user_data.name }}" class="profile-img">
+    <h1>{{ user_data.name }}</h1>
+    <p class="tagline">{{ user_data.position }} at {{ user_data.company }}</p>
+    <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+        <i class="fas fa-file-alt"></i> View Resume
+    </a>
+
+</header>
+<div class="footer-links">
+    <a href="#profile" class="footer-link">Profile</a>
+    <a href="#skills" class="footer-link">Skills</a>
+    <a href="#experience" class="footer-link">Experience</a>
+    <a href="#achievements" class="footer-link">Achievements</a>
+</div>
+<div class="container">
+    <aside class="sidebar">
+        <section>
+            <h2 class="section-title">Contact</h2>
+            {% for contact in contacts %}
+            <div class="contact-item">
+                <div class="contact-label">{{ contact.type }}</div>
+                <div>{{ contact.value }}</div>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section>
+            <h2 class="section-title">Skills</h2>
+            {% for skill in skills_list %}
+            <div class="skill-item">{{ skill }}</div>
+            {% endfor %}
+            <p>{{ skills_desc }}</p>
+        </section>
+    </aside>
+
+    <main class="main-content">
+        <section>
+            <h2 class="section-title">Professional Summary</h2>
+            <p>{{ profile_content }}</p>
+        </section>
+
+        <section>
+            <h2 class="section-title">Experience</h2>
+            {% for exp in experience_list %}
+            <div class="experience-item">
+                <h3 class="experience-title">{{ exp }}</h3>
+                <!-- <div class="experience-meta">{{ exp.company }} | {{ exp.period }}</div> -->
+            </div>
+            {% endfor %}
+            <p>{{ experience_desc }}</p>
+        </section>
+
+        <section>
+            <h2 class="section-title">Achievements</h2>
+            <div class="achievements-grid">
+                {% for achievement in achievements_list %}
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <p>{{ achievement }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <p>{{ achievements_desc }}</p>
+        </section>
+    </main>
+</div>
+
+    
+<footer>
+    <div class="social-links">
+        <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+        <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+        <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+    
+    <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+</footer>
+</body>
+</html>

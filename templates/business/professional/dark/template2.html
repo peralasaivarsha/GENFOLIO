@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Tech Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ff9d;
+            --secondary: #00c973;
+            --text: #e0e0e0;
+            --light-text: #888888;
+            --bg: #0a0a0a;
+            --card-bg: #111111;
+            --border: rgba(0, 255, 157, 0.1);
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .terminal {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        header {
+            margin-bottom: 3rem;
+        }
+
+        .prompt {
+            color: var(--primary);
+            font-family: 'Roboto Mono', monospace;
+            margin-bottom: 0.5rem;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+
+        h1 {
+            font-weight: 500;
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .title {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .experience-item {
+            margin-bottom: 2rem;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-title {
+            font-weight: 400;
+        }
+
+        .job-period {
+            color: var(--light-text);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .company {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .skills-list {
+            columns: 2;
+            column-gap: 2rem;
+        }
+
+        .skill-item {
+            margin-bottom: 0.5rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <header>
+            <div class="prompt">> profile.init()</div>
+            <img src="{{ user_data.profile_pic }}" alt="{{user_data.name}}">
+            <h1>{{ user_data.name }}</h1>
+            <p class="title">{{ user_data.position }} @ {{ user_data.company }}</p>
+            <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> View Resume
+            </a>
+    
+        </header>
+    
+        <main>
+            <div class="grid">
+                <div class="footer-links">
+                    <a href="#profile" class="footer-link">Profile</a>
+                    <a href="#skills" class="footer-link">Skills</a>
+                    <a href="#experience" class="footer-link">Experience</a>
+                    <a href="#achievements" class="footer-link">Achievements</a>
+                </div>
+                <!-- Profile section -->
+                <section class="section" id="profile">
+                    <h2 class="section-title">// about</h2>
+                    <p>{{ profile_content }}</p>
+                </section>
+        
+                <!-- Skills section -->
+                <section class="section" id="skills">
+                    <h2 class="section-title">// skills</h2>
+                    <div class="skills-list">
+                        {% for skill in skills_list %}
+                        <div class="skill-item">{{ skill }}</div>
+                        {% endfor %}
+                        <p>{{ skills_desc }}</p>
+                    </div>
+                </section>
+        
+                <!-- Experience section -->
+                <section class="section" id="experience">
+                    <h2 class="section-title">// experience</h2>
+                    {% for exp in experience_list %}
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <h3 class="job-title">{{ exp }}</h3>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <p>{{ experience_desc }}</p>
+                </section>
+        
+                <!-- Achievements section -->
+                <section class="section" id="achievements">
+                    <h2 class="section-title">// Achievements</h2>
+                    {% for exp in achievements_list %}
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <h3 class="job-title">{{ exp }}</h3>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <p>{{ achievements_desc }}</p>
+                </section>
+            </div>
+        </main>
+        
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+    </div>
+    
+</body>
+</html>

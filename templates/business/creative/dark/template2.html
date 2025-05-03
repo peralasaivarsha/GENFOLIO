@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Cosmic Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --star: #ffffff;
+            --nebula: #9a4dff;
+            --planet: #00e0ff;
+            --text: #e0e0e0;
+            --bg: #0a0a1a;
+            --card-bg: rgba(20, 20, 50, 0.5);
+            --border: rgba(154, 77, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--nebula) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, var(--planet) 0%, transparent 30%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><circle fill="%23ffffff" cx="50" cy="30" r="1"/><circle fill="%23ffffff" cx="150" cy="80" r="0.5"/><circle fill="%23ffffff" cx="300" cy="120" r="1.5"/><circle fill="%23ffffff" cx="250" cy="250" r="1"/><circle fill="%23ffffff" cx="70" cy="350" r="0.5"/><circle fill="%23ffffff" cx="180" cy="300" r="1"/><circle fill="%23ffffff" cx="320" cy="50" r="0.8"/></svg>');
+        }
+
+        .cosmic-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 30px rgba(154, 77, 255, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            background: linear-gradient(90deg, var(--planet), var(--nebula));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--planet);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section:before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--nebula), var(--planet));
+            border-radius: 3px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--planet);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .planet {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, var(--planet), var(--nebula));
+            border-radius: 50%;
+            margin: 2rem auto;
+            box-shadow: 0 0 30px var(--planet);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .skills-orbits {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            height: 300px;
+            margin: 3rem 0;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            animation: spin linear infinite;
+        }
+
+        .orbit:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            animation-duration: 20s;
+        }
+
+        .orbit:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+
+        .orbit:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            animation-duration: 10s;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .skill-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--planet);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--planet);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            /* border: 2px solid var(--primary); */
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <div class="cosmic-container">
+        <header>
+            <div class="planet"></div>
+            <img src="{{ user_data.profile_pic}}" 
+            alt="{{ user_data.name }}" class="profile-img">
+            <h1>{{ user_data.name }}</h1>
+            <p class="tagline">{{ user_data.tagline }}</p>
+            <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> View Resume
+            </a>    
+        </header>
+        <div class="footer-links">
+            <a href="#profile" class="footer-link">Profile</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <section>
+            <h2 class="section-title" id="profile">Cosmic Profile</h2>
+            <p>{{ profile_content }}</p>
+        </section>
+    
+        <section>
+            <h2 class="section-title" id="skills">Orbital Skills</h2>
+            <div class="skills-orbits">
+                {% for skill in skills_list%}
+                <div class="skill-point" style="transform: rotate({{ loop.index * 30 }}deg) translateX(100px)">
+                    {{ skill }}
+                </div>
+                {% endfor %}
+            </div>
+            <p class="skills-description">{{ skills_desc }}</p>
+        </section>
+    
+        <section>
+            <h2 class="section-title" id="experience">Galactic Experience</h2>
+            <div class="experience-grid">
+                {% for experience in experience_list %}
+                <div class="experience-item">
+                    <h3 class="job-title">{{ experience }}</h3>
+                </div>
+                {% endfor %}
+            </div>
+            <p class="experience-description">{{ experience_desc }}</p>
+        </section>
+    
+        <section>
+            <h2 class="section-title" id="achievements">Stellar Achievements</h2>
+            <ul class="achievements-list">
+                {% for achievement in achievements_list %}
+                <li class="achievement">{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            <p>{{ achievements_desc }}</p>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

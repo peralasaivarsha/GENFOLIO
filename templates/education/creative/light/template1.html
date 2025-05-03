@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Paper Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2d3436;
+            --secondary: #636e72;
+            --accent: #e17055;
+            --text: #2d3436;
+            --bg: #f5f6fa;
+            --card-bg: #ffffff;
+            --highlight: #ffeaa7;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 6rem 0 3rem;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            background: white;
+            margin-bottom: 3rem;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--accent);
+            box-shadow: 8px 8px 0 var(--highlight);
+        }
+
+        h1 {
+            font-weight: 500;
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            font-weight: 300;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        section {
+            padding: 3rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            width: 40px;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .section-title {
+            font-weight: 500;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+
+        .skill {
+            padding: 0.5rem 1.2rem;
+            background: var(--card-bg);
+            border-radius: 0;
+            font-size: 0.9rem;
+            border: 2px solid var(--primary);
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .skill:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .project {
+            padding: 2rem;
+            background: var(--card-bg);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .project::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project:hover::after {
+            transform: scaleX(1);
+        }
+
+        .project-title {
+            font-weight: 500;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+            margin-top: 4rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--highlight);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--highlight);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Minimal header -->
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="{{user_data.profile_pic}}" 
+             alt="{{ user_data.name }}" class="profile-img">
+        <h1>{{ user_data.name }}</h1>
+        <!-- <p class="tagline">Web Developer</p> -->
+        <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+            <i class="fas fa-file-alt"></i> View Resume
+        </a>
+
+    </header>
+
+    <main>
+        <div class="footer-links">
+            <a href="#about" class="footer-link">About</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#projects" class="footer-link">Work</a>
+            <a href="#education" class="footer-link">Education</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <!-- About section -->
+        <section id="about">
+            <h2 class="section-title">About</h2>
+            <div class="about-content">
+                {{ about_content }}
+            </div>
+        </section>
+
+        <!-- Skills section -->
+        <section id="skills">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-list">
+                {% for skill in skills_list %}
+                <span class="skill">{{ skill }}</span>
+                {% endfor %}
+            </div>
+            <p class="skills-description">{{ skills_desc }}</p>
+        </section>
+
+        <!-- Projects section -->
+        <section id="projects">
+            <h2 class="section-title">Work</h2>
+            <div class="projects-grid">
+                {% for project in projects_list %}
+                <div class="project">
+                    <h6 class="project-title">{{ project }}</h6>
+                </div>
+                {% endfor %}
+                <p>{{ projects_desc }}</p>
+
+            </div>
+        </section>
+
+        <!-- Education section -->
+        <section id="education">
+            <h2 class="section-title">Education</h2>
+            <div class="skills-list">
+                {% for skill in education_list %}
+                <span class="skill">{{ skill }}</span>
+                {% endfor %}
+            </div>
+            <p>{{ education_desc }}</p>
+        </section>
+
+        <!-- Achievements section -->
+        <section id="achievements">
+            <h2 class="section-title">Achievements</h2>
+            <ul>
+                {% for achievement in achievements_list %}
+                <li>{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            <p>{{ achievements_desc }}</p>
+        </section>
+    </main>
+
+    <!-- Minimal footer -->
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+
+        <p class="copyright">©{{ user_data.name }}</p>
+    </footer>
+
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Minimal JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            });
+            
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Simple fade-in animation
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            const fadeIn = function() {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (sectionTop < windowHeight - 100) {
+                        section.style.opacity = '1';
+                        section.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Run on load and scroll
+            fadeIn();
+            window.addEventListener('scroll', fadeIn);
+        });
+    </script>
+</body>
+</html>

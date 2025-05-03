@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Future Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff2d75;
+            --text: #222222;
+            --light-text: #555555;
+            --bg: #f0f0f0;
+            --card-bg: #ffffff;
+            --scanline: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="4px" viewBox="0 0 100% 4px"><line x1="0" y1="1" x2="100%" y2="1" stroke="rgba(0,240,255,0.1)" stroke-width="1"/></svg>');
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-image: var(--scanline);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background: linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px);
+            background-size: 100% 2px;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .terminal {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            box-shadow: 0 0 30px rgba(0,240,255,0.1),
+                        0 0 0 1px rgba(0,240,255,0.2);
+            position: relative;
+        }
+
+        .terminal:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            opacity: 0.1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: var(--text);
+            margin: 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 400;
+            color: var(--secondary);
+            letter-spacing: 2px;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title:before {
+            content: '>';
+            margin-right: 1rem;
+            color: var(--secondary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-item {
+            padding: 1rem;
+            border: 1px solid rgba(0,240,255,0.3);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(255,45,117,0.1);
+        }
+
+        .skill-item:before {
+            content: '◉';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--light-text);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <header>
+            <img src="{{ user_data.profile_pic}}" 
+            alt="{{ user_data.name }}" class="profile-img">
+            <h1><span>//</span> {{ user_data.name }}</h1>
+            <p class="tagline">{{ user_data.position }} at {{ user_data.company }}</p>
+            <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> View Resume
+            </a>    
+        </header>
+        <div class="footer-links">
+            <a href="#profile" class="footer-link">Profile</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <section class="section" id="profile">
+            <h2 class="section-title">About</h2>
+            <p>{{ profile_content }}</p>
+        </section>
+    
+        <section class="section">
+            <h2 class="section-title" id="skills">Skills</h2>
+            <div class="grid">
+                {% for skill in skills_list %}
+                <div class="skill-item">{{ skill }}</div>
+                {% endfor %}
+            </div>
+            <p class="skills-description">{{ skills_desc }}</p>
+        </section>
+    
+        <section class="section">
+            <h2 class="section-title" id="experience">Professional Experience</h2>
+            <div class="experience-grid">
+                {% for experience in experience_list %}
+                <div class="experience-item">
+                    <h3 class="job-title">{{ experience }}</h3>
+                </div>
+                {% endfor %}
+            </div>
+            <p>{{ experience_desc }}</p>
+        </section>
+    
+        <section class="section">
+            <h2 class="section-title" id="achievements">Key Achievements</h2>
+            <ul>
+                {% for achievement in achievements_list %}
+                <li>{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            <p>{{ achievements_desc }}</p>
+        </section>
+    </div>
+
+
+    
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

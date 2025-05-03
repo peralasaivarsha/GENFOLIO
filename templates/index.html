@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portfolio Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+       <!-- Navigation Bar with Auth Status -->
+       <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-magic me-2"></i>AI Portfolio Generator
+            </a>
+            <div id="authStatus">
+                <!-- Default state shows login/register -->
+                <a href="/login" class="btn btn-sm btn-outline-primary me-2">
+                    <i class="fas fa-sign-in-alt me-1"></i> Login
+                </a>
+                <a href="/register" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-user-plus me-1"></i> Register
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-5">
+        
+        <h1 class="text-center mb-4">AI Portfolio Generator</h1>
+        <p class="text-center mb-5">Create your personalized portfolio in minutes</p>
+
+        <!-- Portfolio Type Selection -->
+        <div id="portfolioTypeSelection" class="text-center">
+            <h3 class="mb-4">What type of portfolio would you like to create?</h3>
+            <div class="d-flex justify-content-center gap-4">
+                <button class="btn btn-primary btn-lg portfolio-type-btn" data-type="business">
+                    <i class="fas fa-briefcase me-2"></i> Business Portfolio
+                </button>
+                <button class="btn btn-success btn-lg portfolio-type-btn" data-type="education">
+                    <i class="fas fa-graduation-cap me-2"></i> Education Portfolio
+                </button>
+            </div>
+        </div>
+
+        <!-- Business Portfolio Form (initially hidden) -->
+        <div id="businessForm" class="d-none">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form id="portfolioForm" enctype="multipart/form-data" method="post">
+                        <input type="hidden" id="portfolioType" name="portfolioType" value="business">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="company" class="form-label">Company/Organization</label>
+                            <input type="text" class="form-control" id="company" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="position" class="form-label">Position</label>
+                            <input type="text" class="form-control" id="position" required>
+                        </div>
+
+                        <!-- EXPERIENCE (Add Multiple) -->
+                        <div class="mb-3">
+                            <label class="form-label">Professional Experience</label>
+                            <div id="experienceContainer">
+                                <div class="input-group mb-2">
+                                    <textarea class="form-control" name="experience[]" required></textarea>
+                                    <button type="button" class="btn btn-outline-secondary add-experience">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="text-muted">List your professional experience with durations</small>
+                        </div>
+
+                        <!-- SKILLS (Add Multiple) -->
+                        <div class="mb-3">
+                            <label class="form-label">Skills</label>
+                            <div id="skillsContainer">
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control" name="skills[]" required>
+                                    <button type="button" class="btn btn-outline-secondary add-skill">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="text-muted">Example: Leadership, Project Management</small>
+                        </div>
+
+                        <!-- ACHIEVEMENTS (Add Multiple) -->
+                        <div class="mb-3">
+                            <label class="form-label">Key Achievements</label>
+                            <div id="achievementsContainer">
+                                <div class="input-group mb-2">
+                                    <textarea class="form-control" name="achievements[]" required></textarea>
+                                    <button type="button" class="btn btn-outline-secondary add-achievement">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="text-muted">List your major professional achievements</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="profilePic" class="form-label">Profile Picture</label>
+                            <input type="file" class="form-control" id="profilePic" name="profilePic" accept="image/*" required>
+                            <small class="text-muted">Upload a professional headshot (optional)</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="resume" class="form-label">Resume Drive Link</label>
+                            <input type="url" class="form-control" id="resume"
+                                placeholder="https://drive.google.com/file/d/yourresume">
+                        </div>
+                        <div class="mb-3">
+                            <label for="linkedin" class="form-label">LinkedIn URL</label>
+                            <input type="url" class="form-control" id="linkedin"
+                                placeholder="https://linkedin.com/in/yourprofile">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="twitter" class="form-label">Twitter/X URL</label>
+                            <input type="url" class="form-control" id="twitter"
+                                placeholder="https://twitter.com/yourhandle">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="github" class="form-label">GitHub URL</label>
+                            <input type="url" class="form-control" id="github"
+                                placeholder="https://github.com/yourusername">
+                        </div>
+                        <div class="mb-3">
+                            <label for="style" class="form-label">Portfolio Style</label>
+                            <select class="form-select" id="style" required>
+                                <option value="">Select a style</option>
+                                <option value="minimalist">Minimalist</option>
+                                <option value="creative">Creative</option>
+                                <option value="professional">Professional</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Preferred Theme</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="theme" id="lightTheme" value="light"
+                                    checked>
+                                <label class="form-check-label" for="lightTheme">Light Mode</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="theme" id="darkTheme" value="dark">
+                                <label class="form-check-label" for="darkTheme">Dark Mode</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-magic me-2"></i> Generate Portfolio
+                        </button>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <div class="sticky-top pt-3">
+                        <div id="previewContainer" class="d-none">
+                            <!-- Preview content same as before -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3>Portfolio Preview</h3>
+                                <div>
+                                    <!-- <button id="businessToggleThemeBtn" class="btn btn-sm btn-outline-secondary me-2">
+                                        <i class="fas fa-adjust"></i> Toggle Theme
+                                    </button> -->
+                                    <button id="businessRegenerateBtn" class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="fas fa-sync-alt"></i> Regenerate
+                                    </button>
+                                    <button id="businessDownloadBtn" class="btn btn-sm btn-success">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="alert alert-info" id="templateInfo"></div>
+                            <div class="border p-3 rounded" id="portfolioPreview" style="width:650px;">
+                                <!-- Portfolio preview will be loaded here -->
+                            </div>
+                        </div>
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-briefcase display-1 text-muted mb-3"></i>
+                            <h4>Your Business Portfolio Preview</h4>
+                            <p class="text-muted">Fill out the form and click "Generate Portfolio" to see your
+                                personalized portfolio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Portfolio Form (initially hidden) -->
+        <div id="educationForm" class="d-none">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form id="portfolioForm" enctype="multipart/form-data" method="post">
+                        <input type="hidden" id="portfolioType" name="portfolioType" value="education">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+
+                        <!-- EDUCATION (Add Multiple) -->
+                        <div class="mb-3">
+                            <label class="form-label">Education</label>
+                            <div id="educationContainer">
+                                <div class="input-group mb-2">
+                                    <textarea class="form-control" name="education[]" required></textarea>
+                                    <button type="button" class="btn btn-outline-secondary add-education">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="text-muted">Example: BSc in Computer Science, XYZ University
+                                (2018-2022)</small>
+                        </div>
+
+                        <!-- SKILLS (Add Multiple) -->
+                        <div class="mb-3">
+                            <label class="form-label">Skills</label>
+                            <div id="skillsContainereducation">
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control" name="skillseducation[]" required>
+                                    <button type="button" class="btn btn-outline-secondary add-skilleducation">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="text-muted">Example: HTML, CSS, JavaScript, Python, React, Node.js</small>
+                        </div>
+
+                        <!-- PROJECTS (Add Multiple) -->
+                        <div class="mb-3">
+                            <label class="form-label">Projects/Research</label>
+                            <div id="projectsContainer">
+                                <div class="input-group mb-2">
+                                    <textarea class="form-control" name="projects[]" required></textarea>
+                                    <button type="button" class="btn btn-outline-secondary add-project">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="text-muted">List your academic projects or research with brief
+                                descriptions.</small>
+                        </div>
+
+                        <!-- ACHIEVEMENTS/CERTIFICATIONS (Add Multiple) -->
+                        <div class="mb-3">
+                            <label class="form-label">Achievements/Certifications</label>
+                            <div id="achievementsContainereducation">
+                                <div class="input-group mb-2">
+                                    <textarea class="form-control" name="achievementseducation[]"></textarea>
+                                    <button type="button" class="btn btn-outline-secondary add-achievementeducation">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="text-muted">List your certifications or academic achievements</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profilePic" class="form-label">Profile Picture</label>
+                            <input type="file" class="form-control" id="profilePic" accept="image/*" required>
+                            <small class="text-muted">Upload a professional headshot (optional)</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="resume" class="form-label">Resume Drive Link</label>
+                            <input type="url" class="form-control" id="resume"
+                                placeholder="https://drive.google.com/file/d/yourresume">
+                        </div>
+                        <div class="mb-3">
+                            <label for="linkedin" class="form-label">LinkedIn URL</label>
+                            <input type="url" class="form-control" id="linkedin"
+                                placeholder="https://linkedin.com/in/yourprofile">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="github" class="form-label">GitHub URL</label>
+                            <input type="url" class="form-control" id="github"
+                                placeholder="https://github.com/yourusername">
+                        </div>
+
+                        <!-- <div class="mb-3">
+                            <label for="website" class="form-label">Personal Website/Portfolio</label>
+                            <input type="url" class="form-control" id="website" placeholder="https://yourwebsite.com">
+                        </div> -->
+
+                        <div class="mb-3">
+                            <label for="style" class="form-label">Portfolio Style</label>
+                            <select class="form-select" id="style" required>
+                                <option value="">Select a style</option>
+                                <option value="minimalist">Minimalist</option>
+                                <option value="creative">Creative</option>
+                                <option value="professional">Professional</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Preferred Theme</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="theme" id="lightThemeEdu"
+                                    value="light" checked>
+                                <label class="form-check-label" for="lightThemeEdu">Light Mode</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="theme" id="darkThemeEdu"
+                                    value="dark">
+                                <label class="form-check-label" for="darkThemeEdu">Dark Mode</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="fas fa-magic me-2"></i> Generate Portfolio
+                        </button>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <div class="sticky-top pt-3">
+                        <div id="previewContainer" class="d-none">
+                            <!-- Preview content same as before -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3>Portfolio Preview</h3>
+                                <div>
+                                    <!-- <button id="educationToggleThemeBtn" class="btn btn-sm btn-outline-secondary me-2">
+                                        <i class="fas fa-adjust"></i> Toggle Theme
+                                    </button> -->
+                                    <button id="educationRegenerateBtn" class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="fas fa-sync-alt"></i> Regenerate
+                                    </button>
+                                    <button id="educationDownloadBtn" class="btn btn-sm btn-success">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="alert alert-info" id="templateInfo"></div>
+                            <div class="border p-3 rounded" id="portfolioPreview">
+                                <!-- Portfolio preview will be loaded here -->
+                            </div>
+                        </div>
+                        <div id="placeholder" class="text-center py-5">
+                            <i class="fas fa-graduation-cap display-1 text-muted mb-3"></i>
+                            <h4>Your Education Portfolio Preview</h4>
+                            <p class="text-muted">Fill out the form and click "Generate Portfolio" to see your
+                                personalized portfolio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const authStatus = document.getElementById('authStatus');
+            if (authStatus) {
+                fetch('/check_auth')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.authenticated) {
+                            authStatus.innerHTML = `
+                                <span class="me-3 align-middle">
+                                    <i class="fas fa-user-circle me-1"></i>
+                                    ${data.username}
+                                </span>
+                                <a href="/logout" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                </a>
+                            `;
+                        } else {
+                            authStatus.innerHTML = `
+                                <a href="/login" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fas fa-sign-in-alt me-1"></i> Login
+                                </a>
+                                <a href="/register" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-user-plus me-1"></i> Register
+                                </a>
+                            `;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking auth status:', error);
+                    });
+            }
+        });
+    </script>
+</body>
+
+</html>

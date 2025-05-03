@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Cyber Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-pink: #ff2a6d;
+            --neon-blue: #05d9e8;
+            --neon-purple: #d300c5;
+            --text: #d1f7ff;
+            --bg: #0d0221;
+            --card-bg: #0f084b;
+            --glow: 0 0 10px var(--neon-blue), 
+                    0 0 20px var(--neon-blue), 
+                    0 0 30px var(--neon-blue);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            /* border: 2px solid var(--primary); */
+        }
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                linear-gradient(rgba(5, 217, 232, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(5, 217, 232, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .cyber-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            border: 1px solid var(--neon-blue);
+            box-shadow: var(--glow);
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-purple));
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--neon-blue);
+        }
+
+        h1 {
+            font-family: 'Major Mono Display', monospace;
+            font-size: 3rem;
+            margin: 1rem 0;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--neon-blue);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border-left: 3px solid var(--neon-purple);
+        }
+
+        .section-title {
+            font-family: 'Major Mono Display', monospace;
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-chip {
+            padding: 0.5rem;
+            border: 1px solid var(--neon-blue);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .skill-chip:hover {
+            background: var(--neon-blue);
+            color: var(--bg);
+            box-shadow: var(--glow);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid var(--neon-purple);
+            font-size: 0.8rem;
+            color: var(--neon-blue);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <div class="cyber-container">
+        <header>
+            <img src="{{ user_data.profile_pic}}" 
+            alt="{{ user_data.name }}" class="profile-img">
+            <h1>{{ user_data.name }}</h1>
+            <p class="tagline">{{ user_data.position }} at {{ user_data.company }}</p>
+            <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> View Resume
+            </a>    
+        </header>
+        <div class="footer-links">
+            <a href="#profile" class="footer-link">Profile</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <section>
+            <h2 class="section-title" id="profile">/bio</h2>
+            <p>{{ profile_content }}</p>
+        </section>
+
+        <section>
+            <h2 class="section-title" id="skills">/skills</h2>
+            <div class="grid">
+                {% for skill in skills_list %}
+                <div class="skill-chip">{{ skill }}</div>
+                {% endfor %}
+            </div>
+            <p class="skills-description">{{ skills_desc }}</p>
+        </section>
+
+        <section>
+            <h2 class="section-title" id="experience">/experience</h2>
+            <div class="experience-grid">
+                {% for experience in experience_list %}
+                <div class="experience-item">
+                    <h3 class="job-title">{{ experience}}</h3>
+                    <!-- <div class="job-meta">{{ experience.company }} | {{ experience.period }}</div> -->
+                    <!-- <p>{{ experience.description }}</p> -->
+                </div>
+                {% endfor %}
+            </div>
+            <p>{{ experience_desc }}</p>
+        </section>
+
+        <section>
+            <h2 class="section-title" id="achievements">/achievements</h2>
+            <ul>
+                {% for achievement in achievements_list %}
+                <li>{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            <p>{{ achievements_desc }}</p>
+        </section>
+    </div>
+
+
+   
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

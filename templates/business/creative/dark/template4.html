@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --matrix-green: #00ff41;
+            --dark-green: #008f11;
+            --bg: #0a0a0a;
+            --text: #00ff41;
+            --cursor: #00ff41;
+        }
+
+        body {
+            font-family: 'Ubuntu Mono', monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            margin: 0;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .terminal {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .prompt {
+            color: var(--dark-green);
+        }
+
+        .command {
+            color: var(--matrix-green);
+            text-shadow: 0 0 5px var(--matrix-green);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: var(--cursor);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .response {
+            margin: 1rem 0 2rem;
+            white-space: pre-wrap;
+        }
+
+        .skill-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 1rem;
+            background: rgba(0, 255, 65, 0.2);
+            display: inline-block;
+            margin-left: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-bar:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--skill-level);
+            background: var(--matrix-green);
+            animation: skill-animate 2s ease-out;
+        }
+
+        @keyframes skill-animate {
+            from { width: 0; }
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <div class="terminal">
+        <div class="prompt">user@portfolio:~$ <span class="command">whoami</span><span class="cursor"></span></div>
+        <img src="{{ user_data.profile_pic}}" 
+        alt="{{ user_data.name }}" class="profile-img">
+        <div class="prompt">user@portfolio:~$ <span class="command">whoami</span><span class="cursor"></span></div>
+        <div class="response">{{ user_data.name }}</div>
+        <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+            <i class="fas fa-file-alt"></i> View Resume
+        </a>
+
+        <div class="footer-links">
+            <a href="#profile" class="footer-link">Profile</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <div class="prompt" id="profile">user@portfolio:~$ <span class="command">cat bio.txt</span><span class="cursor"></span></div>
+        <div class="response">{{ profile_content }}</div>
+        
+        <div class="prompt">user@portfolio:~$ <span class="command">ls skills/</span><span class="cursor"></span></div>
+        <div class="response" id="skills">
+            {% for skill in skills_list%}
+            <div class="skill-item">
+                {{ skill}} <div class="skill-bar" style="--skill-level: {{ skill.level }}%; width: {{ skill.level / 2 }}rem"></div>
+            </div>
+            {% endfor %}
+            <div class="response">{{ skills_desc }}</div>
+        </div>
+        
+        <div class="prompt">user@portfolio:~$ <span class="command">cat experience.txt</span><span class="cursor"></span></div>
+        <div class="response" id="experience">
+            {% for exp in experience_list %}
+            <div class="experience-item">
+                <h3>{{ exp}}</h3>
+            </div>
+            {% endfor %}
+            <div class="response">{{ experience_desc }}</div>
+        </div>
+        
+        <div class="prompt">user@portfolio:~$ <span class="command">cat achievements.txt</span><span class="cursor"></span></div>
+        <div class="response" id="achievements">
+            <ul>
+                {% for achievement in achievements_list%}
+                <li>{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            <div class="response">{{ achievements_desc }}</div>
+        </div>
+        
+        <div class="prompt">user@portfolio:~$ <span class="command"></span><span class="cursor"></span></div>
+        
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+    </div>
+    <script>
+        // Simple matrix rain effect
+        const chars = "01";
+        const matrix = document.getElementById('matrixRain');
+        
+        function createMatrix() {
+            const columns = Math.floor(window.innerWidth / 20);
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.style.position = 'absolute';
+                column.style.top = '0';
+                column.style.left = (i * 20) + 'px';
+                column.style.width = '20px';
+                column.style.color = '#00ff41';
+                column.style.fontFamily = 'Ubuntu Mono';
+                column.style.wordBreak = 'break-all';
+                column.style.textAlign = 'center';
+                column.style.fontSize = '16px';
+                matrix.appendChild(column);
+                
+                animateColumn(column);
+            }
+        }
+        
+        function animateColumn(column) {
+            let length = Math.floor(Math.random() * 10) + 5;
+            let speed = Math.random() * 50 + 50;
+            let position = 0;
+            
+            function addChar() {
+                let char = document.createElement('div');
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.opacity = (position / length).toString();
+                column.appendChild(char);
+                
+                if (column.children.length > length) {
+                    column.removeChild(column.children[0]);
+                }
+                
+                position++;
+                setTimeout(addChar, speed);
+            }
+            
+            addChar();
+        }
+        
+        createMatrix();
+    </script>
+</body>
+</html>

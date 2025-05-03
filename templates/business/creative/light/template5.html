@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Creative Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6a3093;
+            --secondary: #a044ff;
+            --text: #333333;
+            --light-text: #777777;
+            --bg: #f9f4ff;
+            --card-bg: #ffffff;
+            --blob: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><path fill="%236a3093" d="M455.5,320.5Q418,391,349,433.5Q280,476,198.5,444Q117,412,85.5,336Q54,260,99,197Q144,134,214.5,103Q285,72,338,118Q391,164,432.5,212Q474,260,455.5,320.5Z"/></svg>');
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .organic-header {
+            height: 70vh;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .organic-header:before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background-image: var(--blob);
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+        }
+
+        .organic-header:after {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background-image: var(--blob);
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            transform: rotate(180deg);
+        }
+
+        .header-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin: 1rem 0;
+        }
+
+        .tagline {
+            font-weight: 300;
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: -100px auto 0;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .organic-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .organic-card:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background-image: var(--blob);
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-bubble {
+            padding: 1rem 1.5rem;
+            background: var(--bg);
+            border-radius: 50px;
+            font-weight: 500;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .skill-bubble:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 0;
+            background: var(--primary);
+            color: white;
+            margin-top: 5rem;
+            clip-path: ellipse(100% 100% at 50% 100%);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <header class="organic-header">
+        <div class="header-content">
+            <img src="{{ user_data.profile_pic}}" 
+            alt="{{ user_data.name }}" class="profile-img">
+            <h1>{{ user_data.name }}</h1>
+            <p class="tagline">{{ user_data.position }} at {{ user_data.company }}</p>
+            <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> View Resume
+            </a>
+    
+        </div>
+    </header>
+    <div class="footer-links">
+        <a href="#profile" class="footer-link">Profile</a>
+        <a href="#skills" class="footer-link">Skills</a>
+        <a href="#experience" class="footer-link">Experience</a>
+        <a href="#achievements" class="footer-link">Achievements</a>
+    </div>
+    <div class="container">
+        <div class="organic-card">
+            <div class="card-content">
+                <h2 class="section-title" id="profile">Professional Profile</h2>
+                <p>{{ profile_content }}</p>
+            </div>
+        </div>
+    
+        <div class="organic-card">
+            <div class="card-content">
+                <h2 class="section-title" id="skills">Core Competencies</h2>
+                <div class="skills-container">
+                    {% for skill in skills_list %}
+                    <div class="skill-bubble">{{ skill }}</div>
+                    {% endfor %}
+                </div>
+                <p class="skills-description">{{ skills_desc }}</p>
+            </div>
+        </div>
+    
+        <div class="organic-card">
+            <div class="card-content">
+                <h2 class="section-title" id="experience">Professional Experience</h2>
+                <div class="experience-grid">
+                    {% for experience in experience_list %}
+                    <div class="experience-item">
+                        <h3 class="job-title">{{ experience}}</h3>
+                    </div>
+                    {% endfor %}
+                </div>
+                <p>{{ experience_desc }}</p>
+            </div>
+        </div>
+    
+        <div class="organic-card">
+            <div class="card-content">
+                <h2 class="section-title" id="achievements">Key Achievements</h2>
+                <ul>
+                    {% for achievement in achievements_list %}
+                    <li>{{ achievement }}</li>
+                    {% endfor %}
+                </ul>
+                <p>{{ achievements_desc }}</p>
+            </div>
+        </div>
+    </div>
+
+    
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

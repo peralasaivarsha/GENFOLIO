@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #333333;
+            --secondary: #777777;
+            --accent: #555555;
+            --text: #333333;
+            --bg: #ffffff;
+            --card-bg: #f9f9f9;
+            --footer-bg: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Ultra-minimal header */
+        header {
+            padding: 4rem 0 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 2rem;
+            margin: 0.5rem 0;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-weight: 300;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Minimal sections */
+        section {
+            padding: 2rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-weight: 400;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .section-title:hover::after {
+            width: 50px;
+        }
+
+        /* Skills list */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill {
+            padding: 0.3rem 0.8rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .skill:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Experience */
+        .experience-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .experience {
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .experience:hover {
+            border-left: 3px solid var(--primary);
+            transform: translateX(5px);
+        }
+
+        .experience-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Achievements */
+        .achievements-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .achievement {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Minimal footer */
+        footer {
+            background: var(--footer-bg);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+        /* Portfolio Layout */
+.portfolio-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.portfolio-section {
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Profile Section */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eee;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.social-link {
+    font-size: 1.5rem;
+    color: #333;
+}
+.footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+/* Skills Section */
+.skills-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.skill-tag {
+    background: #f0f4ff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Experience Timeline */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -30px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #4a6bff;
+}
+
+.timeline-content {
+    border-left: 2px solid #4a6bff;
+    padding-left: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+/* Achievements Grid */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.achievement-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.achievement-icon {
+    color: #4a6bff;
+    font-size: 1.2rem;
+}
+
+/* Typography */
+.section-title {
+    color: #333;
+    border-bottom: 2px solid #4a6bff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 2rem 1.5rem;
+            }
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Minimal header -->
+    <header>
+        <img src="{{ user_data.profile_pic}}" 
+             alt="{{ user_data.name }}" class="profile-img">
+        <h1>{{ user_data.name }}</h1>
+        <p class="tagline">{{ user_data.position }} at {{ user_data.company }}</p>
+        <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+            <i class="fas fa-file-alt"></i> View Resume
+        </a>
+
+        <div class="footer-links">
+            <a href="#profile" class="footer-link">Profile</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <div class="profile-content" id="profile">
+            <p>{{ profile_content }}</p>
+        </div>
+        <div class="social-links">
+            {% if social_links.linkedin %}
+            <a href="{{ social_links.linkedin }}" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            {% endif %}
+            {% if social_links.twitter %}
+            <a href="{{ social_links.twitter }}" target="_blank" class="social-link">
+                <i class="fab fa-twitter"></i>
+            </a>
+            {% endif %}
+            {% if social_links.github %}
+            <a href="{{ social_links.github }}" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+            </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="portfolio-container">  
+        <!-- Skills section -->
+        <section id="skills" class="portfolio-section">
+            <h2 class="section-title"><i class="fas fa-tools"></i> Core Competencies</h2>
+            <div class="skills-container">
+                <div class="skills-cloud">
+                    {% for skill in skills_list %}
+                    <span class="skill-tag">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+                <div class="skills-description">
+                    <h3>Skill Highlights</h3>
+                    <p>{{ skills_desc }}</p>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Experience section -->
+        <section id="experience" class="portfolio-section">
+            <h2 class="section-title"><i class="fas fa-briefcase"></i> Professional Experience</h2>
+            <div class="timeline">
+                {% for experience in experience_list %}
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>{{ experience.split(' at ')[0] }}</h3>
+                            {% if ' at ' in experience %}
+                            <span class="company">{{ experience.split(' at ')[1] }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="experience-description">
+                <h3>Experience Summary</h3>
+                <p>{{ experience_desc }}</p>
+            </div>
+        </section>
+    
+        <!-- Achievements section -->
+        <section id="achievements" class="portfolio-section">
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Key Achievements</h2>
+            <div class="achievements-grid">
+                {% for achievement in achievements_list %}
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <p>{{ achievement }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="achievements-description">
+                <h3>Achievements Impact</h3>
+                <p>{{ achievements_desc }}</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Minimal footer -->
+    <footer>
+        <div class="social-links">
+            {% if social_links.linkedin %}
+            <a href="{{ social_links.linkedin }}" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            {% endif %}
+            {% if social_links.twitter %}
+            <a href="{{ social_links.twitter }}" target="_blank" class="social-link">
+                <i class="fab fa-twitter"></i>
+            </a>
+            {% endif %}
+            {% if social_links.github %}
+            <a href="{{ social_links.github }}" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+            </a>
+            {% endif %}
+            <a href="mailto:{{ user_data.email }}" class="footer-link">Contact</a>
+        </div>
+        <p class="copyright">©{{ user_data.name }}</p>
+    </footer>
+
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Minimal JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            });
+            
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Simple fade-in animation
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            const fadeIn = function() {
+                sections.forEach(section => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (sectionTop < windowHeight - 100) {
+                        section.style.opacity = '1';
+                        section.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Run on load and scroll
+            fadeIn();
+            window.addEventListener('scroll', fadeIn);
+        });
+    </script>
+</body>
+</html>

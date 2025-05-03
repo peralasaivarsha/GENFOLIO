@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Creative Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Handlee&family=Schoolbell&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e84393;
+            --secondary: #fd79a8;
+            --text: #2d3436;
+            --light-text: #636e72;
+            --bg: #f9f7f0;
+            --paper: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><path fill="%23f1e8d5" d="M0 0h400v400H0z"/><path fill="none" stroke="%23e0d5b8" stroke-width="1.5" d="M0 40h400M0 80h400M0 120h400M0 160h400M0 200h400M0 240h400M0 280h400M0 320h400M0 360h400"/></svg>');
+        }
+
+        body {
+            font-family: 'Handlee', cursive;
+            background-color: var(--bg);
+            background-image: var(--paper);
+            color: var(--text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sketchbook {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .sketchbook:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50px;
+            right: 0;
+            bottom: 0;
+            border-left: 1px solid #e0d5b8;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin: 0.5rem 0;
+            transform: rotate(-2deg);
+        }
+
+        .tagline {
+            font-family: 'Schoolbell', cursive;
+            font-size: 1.5rem;
+            color: var(--light-text);
+           t ransform: rotate(1deg);
+        }
+
+        .note {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
+            position: relative;
+            transform: rotate(0.5deg);
+            border-radius: 0 0 120px 120px/0 0 20px 20px;
+        }
+
+        .note:after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.1) 60%);
+        }
+
+        .note-title {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px dashed var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .pin {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #d63031 40%, transparent 40%);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            font-family: 'Schoolbell', cursive;
+            color: var(--light-text);
+            transform: rotate(-1deg);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <div class="sketchbook">
+        <header>
+            <img src="{{ user_data.profile_pic}}" 
+            alt="{{ user_data.name }}" class="profile-img">
+            <h1>{{ user_data.name }}</h1>
+            <p class="tagline">{{ user_data.position }} at {{ user_data.company }}</p>
+            <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> View Resume
+            </a>    
+        </header>
+        <div class="footer-links">
+            <a href="#profile" class="footer-link">Profile</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <div class="note" style="transform: rotate(-1deg)">
+            <div class="pin"></div>
+            <h2 class="note-title" id="profile">Professional Profile</h2>
+            <p>{{ profile_content }}</p>
+        </div>
+    
+        <div class="note" style="transform: rotate(2deg)">
+            <div class="pin"></div>
+            <h2 class="note-title" id="skills">Core Competencies</h2>
+            <ul>
+                {% for skill in skills_list %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+            <p class="skills-description">{{ skills_desc }}</p>
+        </div>
+    
+        <div class="note" style="transform: rotate(-3deg)">
+            <div class="pin"></div>
+            <h2 class="note-title">Professional Experience</h2>
+            <div class="experience-grid" id="experience">
+                {% for experience in experience_list %}
+                <div class="experience-item">
+                    <h3 class="job-title">{{ experience}}</h3>
+                </div>
+                {% endfor %}
+            </div>
+            <p>{{ experience_desc }}</p>
+        </div>
+    
+        <div class="note" style="transform: rotate(1deg)">
+            <div class="pin"></div>
+            <h2 class="note-title" id="achievements">Key Achievements</h2>
+            <ul>
+                {% for achievement in achievements_list %}
+                <li>{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            <p>{{ achievements_desc }}</p>
+        </div>
+    </div>
+    
+
+   
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Creative Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --text: #2d3436;
+            --light-text: #636e72;
+            --bg: #f7f7f7;
+            --card-bg: #ffffff;
+            --brushstroke: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60"><path fill="%23ff6b6b" d="M0,30 C30,-10 70,50 100,30 C130,10 170,70 200,30 L200,60 L0,60 Z"/></svg>');
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .artistic-header {
+            background: var(--primary);
+            padding: 5rem 2rem 8rem;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+
+        .artistic-header:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-image: var(--brushstroke);
+            background-size: 200px 60px;
+            background-repeat: repeat-x;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin: 1rem 0;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: -4rem auto 0;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .artistic-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--primary);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .skills-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1.2rem;
+            background: white;
+            border-radius: 30px;
+            border: 2px solid var(--secondary);
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            margin-top: 3rem;
+            background: var(--secondary);
+            color: white;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <header class="artistic-header">
+        <img src="{{ user_data.profile_pic}}" 
+             alt="{{ user_data.name }}" class="profile-img">
+        <h1>{{ user_data.name }}</h1>
+        <p class="tagline">{{ user_data.position }} at {{ user_data.company }}</p>
+        <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+            <i class="fas fa-file-alt"></i> View Resume
+        </a>
+        <div class="footer-links">
+            <a href="#profile" class="footer-link">Profile</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#experience" class="footer-link">Experience</a>
+            <a href="#achievements" class="footer-link">Achievements</a>
+        </div>
+        <div class="profile-content" id="profile">
+            <p>{{ profile_content }}</p>
+        </div>
+        <div class="social-links">
+            {% if social_links.linkedin %}
+            <a href="{{ social_links.linkedin }}" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            {% endif %}
+            {% if social_links.twitter %}
+            <a href="{{ social_links.twitter }}" target="_blank" class="social-link">
+                <i class="fab fa-twitter"></i>
+            </a>
+            {% endif %}
+            {% if social_links.github %}
+            <a href="{{ social_links.github }}" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+            </a>
+            {% endif %}
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="artistic-card">
+            <h2 class="section-title" id="skills">Core Competencies</h2>
+            <div class="skills-cloud">
+                {% for skill in skills_list %}
+                <span class="skill-tag">{{ skill }}</span>
+                {% endfor %}
+            </div>
+            <p class="skills-description">{{ skills_desc }}</p>
+        </div>
+    
+        <div class="artistic-card">
+            <h2 class="section-title" id="experience">Professional Experience</h2>
+            <div class="experience-grid">
+                {% for experience in experience_list %}
+                <div class="experience">
+                    <h3 class="experience-title">{{ experience}}</h3>
+                </div>
+                {% endfor %}
+            </div>
+            <p class="experience-description">{{ experience_desc }}</p>
+        </div>
+    
+        <div class="artistic-card">
+            <h2 class="section-title" id="achievements">Key Achievements</h2>
+            <ul class="achievements-list">
+                {% for achievement in achievements_list %}
+                <li class="achievement">{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            <p class="achievements-description">{{ achievements_desc }}</p>
+        </div>
+    </div>
+    
+
+   
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

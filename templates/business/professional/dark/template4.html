@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_data.name }} | Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --text: #e0e0e0;
+            --light-text: #b0b0b0;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --border: rgba(108, 92, 231, 0.2);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin: 1rem 0 0.5rem;
+            color: var(--primary);
+        }
+
+        .title {
+            font-weight: 300;
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .card-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .experience-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .job-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-meta {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            color: var(--light-text);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+        .resume-btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+    .resume-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="{{ user_data.profile_pic}}" 
+            alt="{{ user_data.name }}" class="profile-img">
+            <h1>{{ user_data.name }}</h1>
+            <p class="title">{{ user_data.position }} at {{ user_data.company }}</p>
+            <a href="{{ social_links.resume }}" class="resume-btn" target="_blank">
+                <i class="fas fa-file-alt"></i> View Resume
+            </a>    
+        </header>
+    
+        <div class="grid">
+            <div class="footer-links">
+                <a href="#profile" class="footer-link">Profile</a>
+                <a href="#skills" class="footer-link">Skills</a>
+                <a href="#experience" class="footer-link">Experience</a>
+                <a href="#achievements" class="footer-link">Achievements</a>
+            </div>
+            <section class="card" id="profile">
+                <h2 class="card-title">Professional Profile</h2>
+                <p>{{ profile_content }}</p>
+            </section>
+    
+            <section class="card" id="skills">
+                <h2 class="card-title">Core Competencies</h2>
+                <div class="skills-list">
+                    {% for skill in skills_list %}
+                    <div class="skill-item">{{ skill }}</div>
+                    {% endfor %}
+                </div>
+                <p class="skills-description">{{ skills_desc }}</p>
+            </section>
+    
+            <section class="card" id="experience">
+                <h2 class="card-title">Professional Experience</h2>
+                {% for exp in experience_list %}
+                <div class="experience-item">
+                    <h3 class="job-title">{{ exp }}</h3>
+                    
+                </div>
+                {% endfor %}
+                <p>{{ experience_desc }}</p>
+            </section>
+    
+            <section class="card" id="achievements">
+                <h2 class="card-title">Key Achievements</h2>
+                <ul class="achievements-list">
+                    {% for achievement in achievements_list %}
+                    <li class="achievement">{{ achievement }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    
+       
+    <footer>
+        <div class="social-links">
+            <a href="{{ social_links.linkedin }}" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="{{ social_links.github }}" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="{{ social_links.twitter }}" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="mailto:{{ user_data.email }}" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p>© {{ current_year }} {{ user_data.name }}. All rights reserved.</p>
+    </footer>
+    </div>
+</body
