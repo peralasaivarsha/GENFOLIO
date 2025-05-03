@@ -1,6 +1,6 @@
 # GenFolio – Personalized Creative Portfolios using Generative AI
 
-## 📌 Overview
+##  Overview
 
 Creating a professional portfolio can be challenging for individuals without a background in web development. While portfolios are essential for showcasing skills, achievements, and experience—especially in job applications and academic pursuits—designing one from scratch often requires technical expertise.
 
@@ -8,7 +8,7 @@ Creating a professional portfolio can be challenging for individuals without a b
 
 ---
 
-## 🚀 Features
+##  Features
 
 - 🧩 **Customizable Input Forms**: Sections for Education, Projects, Skills, Awards, and more.
 - 🎨 **No-Code Portfolio Creation**: Generate complete portfolios without writing a single line of code.
@@ -29,7 +29,7 @@ Creating a professional portfolio can be challenging for individuals without a b
 
 ---
 
-## 🎯 Use Case
+##  Use Case
 
 Whether you're a student applying for internships or a professional looking to change careers, GenFolio helps you build a compelling digital presence. It eliminates technical barriers, saving time and effort so you can focus on showcasing what truly matters—**your achievements**.
 
